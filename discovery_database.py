@@ -100,7 +100,6 @@ class DiscoveryDatabase:
                 self.conn.commit()
             except Exception as e:
                 self.conn.rollback()
-                # Table might already exist
                 pass
     
     def insert_event(self, event: DiscoveryEvent) -> int:
@@ -375,54 +374,3 @@ class DiscoveryDatabase:
     
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
-
-
-# =====================================================================
-# EXAMPLE USAGE
-# =====================================================================
-if __name__ == "__main__":
-    from plant_discovery_simulator import PlantDiscoverySimulator
-    
-    # Create simulator and generate events
-    simulator = PlantDiscoverySimulator()
-    scenarios = [
-        {"elec": 2.0, "voc": 0.1, "nir": 0.0},
-        {"elec": -18.5, "voc": 2.5, "nir": 2.0},
-        {"elec": 5.0, "voc": 2.8, "nir": 32.4},
-        {"elec": 1.5, "voc": 0.05, "nir": -1.0},
-        {"elec": -20.0, "voc": 3.0, "nir": 5.0},
-    ]
-    
-    results = simulator.batch_analyze(scenarios)
-    
-    # Use database
-    print("📦 Testing DiscoveryDatabase...\n")
-    
-    with DiscoveryDatabase() as db:
-        # Insert events
-        print("➕ Inserting events...")
-        db.insert_batch(results)
-        
-        # Get statistics
-        stats = db.get_statistics()
-        print(f"\n📊 Statistics:")
-        for key, value in stats.items():
-            print(f"   {key}: {value}")
-        
-        # Query by type
-        print(f"\n🔍 Events by type:")
-        for discovery_type in DiscoveryType:
-            events = db.get_by_type(discovery_type)
-            print(f"   {discovery_type.name}: {len(events)} events")
-        
-        # High confidence events
-        high_conf = db.get_by_confidence_range(50.0, 100.0)
-        print(f"\n⭐ High confidence events (>50%): {len(high_conf)}")
-        for event in high_conf[:3]:
-            print(f"   - {event.detected_phenomenon.name}: {event.confidence_score}%")
-        
-        # Export
-        db.export_to_json("discoveries_export.json")
-        
-        # Backup
-        db.backup("discoveries_backup.db")
