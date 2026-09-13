@@ -1,0 +1,32 @@
+{
+  "name": "alex-ai-agent",
+  "version": "3.0.0",
+  "description": "LOGOALGORITHM DSL Engine: Ternary Logic, Qutrit Cube Storage, and Biosynthetic Programming",
+  "main": "logo_launcher.py",
+  "scripts": {
+    "generate-spec": "node spec_generator.js",
+    "test": "pytest tests/",
+    "lint": "pylint *.py",
+    "run-example": "python logo_launcher.py examples/basic.logo"
+  },
+  "keywords": [
+    "ternary-logic",
+    "qutrit",
+    "dsl",
+    "biosynthesis",
+    "logoalgorithm",
+    "ai-agent"
+  ],
+  "author": "Alex Berry AI",
+  "license": "MIT",
+  "dependencies": {
+    "docx": "^8.5.0"
+  },
+  "devDependencies": {
+    "pytest": "^7.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlexBerry-Ai/alex-ai-agent.git"
+  }
+}

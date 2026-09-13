@@ -1,0 +1,27 @@
+# Qutrit Cube Rotation and Transformation Example
+
+RESET
+
+# Initialize cube with pattern
+SET 0 0 0 1
+SET 1 1 1 1
+SET 2 2 2 1
+SET 0 1 2 2
+SET 2 1 0 2
+
+PRINT Initial cube state set
+
+# Perform rotations
+ROTATE X
+ROTATE Y
+ROTATE Z
+
+PRINT Cube transformations complete
+
+# Execute ternary logic cascade
+LOGIC AND 1 1
+LOGIC OR 0 1
+LOGIC XOR 1 0
+
+PRINT Ternary logic operations finished
+STATUS
